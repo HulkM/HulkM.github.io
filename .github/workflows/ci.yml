@@ -40,4 +40,4 @@ jobs:
 
       # 5. 故意让下一步失败（实验完后可以删除或注释）
       - name: Intentional failure (for testing)
-        run: exit 0   # 改为 exit 1 就会失败
+        run: exit 1   # 改为 exit 1 就会失败
