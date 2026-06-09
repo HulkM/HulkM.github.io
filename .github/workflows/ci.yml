@@ -1,0 +1,43 @@
+name: My first CI experiment
+
+on:
+  push:
+    branches: ["main"]
+  # 手动触发，便于调试
+  workflow_dispatch:
+
+jobs:
+  explore:
+    runs-on: ubuntu-latest
+    steps:
+      # 拉取代码
+      - name: Checkout code
+        # 调用官方actions,简单的可以直接是run
+        uses: actions/checkout@v4
+
+      # 打印系统信息
+      - name: Show environment
+        run: |
+          echo "Hello, github actions!"
+          echo "Current directory: $(pwd)"
+                    ls -la
+
+      # 3. 检查 README.md 是否存在
+      - name: Check README
+        run: |
+          if [ -f README.md ]; then
+            echo "✅ README.md found"
+          else
+            echo "❌ README.md missing"
+            exit 1
+          fi
+
+      # 4. 生成一个动态文件（不提交，仅演示）
+      - name: Generate timestamp
+        run: |
+          echo "Last run: $(date)" > last-run.txt
+          cat last-run.txt
+
+      # 5. 故意让下一步失败（实验完后可以删除或注释）
+      - name: Intentional failure (for testing)
+        run: exit 0   # 改为 exit 1 就会失败
